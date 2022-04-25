@@ -1,6 +1,4 @@
-import { getKeyThenIncreaseKey } from "antd/lib/message";
-import { truncate } from "fs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const isFalsy = (value: any) => (value === 0 ? false : !value);
 
@@ -74,8 +72,7 @@ export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
 ) => {
-  const oldTitle = document.title;
-  console.log("渲染时的oldTitle: ", oldTitle);
+  const oldTitle = useRef(document.title).current;
 
   useEffect(() => {
     document.title = title;
@@ -84,9 +81,8 @@ export const useDocumentTitle = (
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
-        console.log("卸载时的oldTitle: ", oldTitle);
         document.title = oldTitle;
       }
     };
-  }, []);
+  }, [keepOnUnmount, oldTitle]);
 };
