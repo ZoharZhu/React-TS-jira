@@ -1,3 +1,5 @@
+import { getKeyThenIncreaseKey } from "antd/lib/message";
+import { truncate } from "fs";
 import { useState, useEffect } from "react";
 
 export const isFalsy = (value: any) => (value === 0 ? false : !value);
@@ -66,4 +68,25 @@ export const useArray = <T>(array: T[]) => {
     setValue([]);
   };
   return { value, setValue, add, removeIndex, clear };
+};
+
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  const oldTitle = document.title;
+  console.log("渲染时的oldTitle: ", oldTitle);
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        console.log("卸载时的oldTitle: ", oldTitle);
+        document.title = oldTitle;
+      }
+    };
+  }, []);
 };
