@@ -14,6 +14,14 @@ export const useURLQueryParam = <K extends string>(keys: K[]) => {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [searchParams]
     ),
+    // 使用subset的写法：
+    // useMemo(
+    //   () =>
+    //     subset(Object.fromEntries(searchParams), stateKeys) as {
+    //       [key in K]: string;
+    //     },
+    //   [searchParams, stateKeys]
+    // ),
     (params: Partial<{ [key in K]: unknown }>) => {
       // iterator: https://codesandbox.io/s/upbeat-wood-bum3j?file=/src/index.js
       const o = cleanObject({
