@@ -94,18 +94,18 @@ export const resetRoute = () => (window.location.href = window.location.origin);
  * @param obj
  * @param keys
  */
-// export const subset = <
-//   O extends { [key in string]: unknown },
-//   K extends keyof O
-// >(
-//   obj: O,
-//   keys: K[]
-// ) => {
-//   const filteredEntries = Object.entries(obj).filter(([key]) =>
-//     keys.includes(key as K)
-//   );
-//   return Object.fromEntries(filteredEntries) as Pick<O, K>;
-// };
+export const subset = <
+  O extends { [key in string]: unknown },
+  K extends keyof O
+>(
+  obj: O,
+  keys: K[]
+) => {
+  const filteredEntries = Object.entries(obj).filter(([key]) =>
+    keys.includes(key as K)
+  );
+  return Object.fromEntries(filteredEntries) as Pick<O, K>;
+};
 
 /**
  * 返回组件的挂载状态，如果还没挂载或者已经卸载，返回false；反之，返回true
