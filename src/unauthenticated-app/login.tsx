@@ -2,8 +2,7 @@ import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "./index";
 import { useAsync } from "../utils/use-async";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import { useDispatch } from "react-redux";
 
 export const LoginScreen = ({
   onError,
@@ -12,6 +11,7 @@ export const LoginScreen = ({
 }) => {
   const { user, login } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  const dispatch = useDispatch();
 
   // values根据Form.Item的name属性获取
   const handleSubmit = async (values: {
