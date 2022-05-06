@@ -4,6 +4,7 @@ import { Project } from "../screens/project-list/list";
 import { useAsync } from "./use-async";
 import { useHttp } from "./http";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useProjectsSearchParams } from "../screens/project-list/utils";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
@@ -17,6 +18,8 @@ export const useProjects = (param?: Partial<Project>) => {
 export const useEditProject = () => {
   const client = useHttp();
   const queryClient = useQueryClient();
+  const [searchParams] = useProjectsSearchParams();
+  const queryKey = ["projects", searchParams];
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -25,7 +28,24 @@ export const useEditProject = () => {
         data: params,
       }),
     {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+      async onMutate(target) {
+        const previousItems = queryClient.getQueryData(queryKey);
+        queryClient.setQueryData(queryKey, (old?: Project[]) => {
+          return (
+            old?.map((project) =>
+              project.id === target.id ? { ...project, ...target } : project
+            ) || []
+          );
+        });
+        return { previousItems };
+      },
+      onError(error, newItem, context) {
+        queryClient.setQueryData(
+          queryKey,
+          (context as { previousItems: Project[] }).previousItems
+        );
+      },
     }
   );
 };
