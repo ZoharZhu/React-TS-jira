@@ -1,4 +1,4 @@
-import { Project } from "../screens/project-list/list";
+import { Project } from "../types/project";
 import { useHttp } from "./http";
 import { QueryKey, useMutation, useQuery } from "react-query";
 import {
@@ -7,6 +7,7 @@ import {
   useEditConfig,
 } from "./use-optimistic-options";
 
+// 获取任务列表
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
 

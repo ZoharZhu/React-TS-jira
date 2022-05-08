@@ -3,18 +3,10 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { ButtonNoPadding } from "../../components/lib";
 import { Pin } from "../../components/pin";
+import { Project } from "../../types/project";
 import { useDeleteProject, useEditProject } from "../../utils/project";
-import { User } from "./search-panel";
+import { User } from "../../types/user";
 import { useProjectModal, useProjectsQueryKey } from "./utils";
-
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
 
 interface ListProps extends TableProps<Project> {
   users: User[];
