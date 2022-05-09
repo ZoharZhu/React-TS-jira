@@ -3,7 +3,7 @@ import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { cleanObject, subset } from "./index";
 
 // 返回页面url中，指定键的参数值
-export const useURLQueryParam = <K extends string>(keys: K[]) => {
+export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams] = useSearchParams();
   const setSearchParams = useSetUrlSearchParam();
   const [stateKeys] = useState(keys);

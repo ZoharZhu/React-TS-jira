@@ -13,8 +13,8 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
   if (!name) return null;
   return (
     <img
-      src={name === "taskIcon" ? taskIcon : bugIcon}
-      alt=""
+      src={name === "task" ? taskIcon : bugIcon}
+      alt="task-icon"
       style={{ width: "1.6rem" }}
     />
   );
