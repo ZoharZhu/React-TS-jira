@@ -1,11 +1,15 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
-import styled from "@emotion/styled";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectModal, useProjectsSearchParams } from "./utils";
-import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib";
+import {
+  ButtonNoPadding,
+  ErrorBox,
+  Row,
+  ScreenContainer,
+} from "../../components/lib";
 
 // 基本类型，可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里
 // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
@@ -20,7 +24,7 @@ export const ProjectListScreen = () => {
   const { data: users } = useUsers();
 
   return (
-    <Container>
+    <ScreenContainer>
       <Row between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding onClick={open} type="link">
@@ -30,12 +34,8 @@ export const ProjectListScreen = () => {
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       <ErrorBox error={error} />
       <List users={users || []} dataSource={list || []} loading={isLoading} />
-    </Container>
+    </ScreenContainer>
   );
 };
 
 ProjectListScreen.whyDidYouRender = false;
-
-const Container = styled.div`
-  padding: 3.2rem;
-`;
