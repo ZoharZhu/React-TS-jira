@@ -2,10 +2,12 @@ import { QueryKey, useMutation, useQuery } from "react-query";
 import { useDebounce } from ".";
 import { Task } from "../types/task";
 import { useHttp } from "./http";
+import { SortProps } from "./kanban";
 import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
+  useReorderConfig,
 } from "./use-optimistic-options";
 
 // 获取任务列表
@@ -71,4 +73,15 @@ export const useDeleteTask = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey)
   );
+};
+
+// 排序任务
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation((params: SortProps) => {
+    return client("tasks/reorder", {
+      data: params,
+      method: "POST",
+    });
+  }, useReorderConfig(queryKey));
 };
