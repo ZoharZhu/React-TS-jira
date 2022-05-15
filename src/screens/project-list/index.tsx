@@ -10,6 +10,7 @@ import {
   Row,
   ScreenContainer,
 } from "../../components/lib";
+import { Profiler } from "../../components/profiler";
 
 // 基本类型，可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里
 // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
@@ -24,17 +25,19 @@ export const ProjectListScreen = () => {
   const { data: users } = useUsers();
 
   return (
-    <ScreenContainer>
-      <Row marginBottom={2} between={true}>
-        <h1>项目列表</h1>
-        <ButtonNoPadding onClick={open} type="link">
-          创建项目
-        </ButtonNoPadding>
-      </Row>
-      <SearchPanel param={param} setParam={setParam} users={users || []} />
-      <ErrorBox error={error} />
-      <List users={users || []} dataSource={list || []} loading={isLoading} />
-    </ScreenContainer>
+    <Profiler id="项目列表">
+      <ScreenContainer>
+        <Row marginBottom={2} between={true}>
+          <h1>项目列表</h1>
+          <ButtonNoPadding onClick={open} type="link">
+            创建项目
+          </ButtonNoPadding>
+        </Row>
+        <SearchPanel param={param} setParam={setParam} users={users || []} />
+        <ErrorBox error={error} />
+        <List users={users || []} dataSource={list || []} loading={isLoading} />
+      </ScreenContainer>
+    </Profiler>
   );
 };
 
